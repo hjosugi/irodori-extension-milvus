@@ -35,6 +35,24 @@ The Rust code keeps native ABI exports in `src/lib.rs`, shared buffer/JSON helpe
 | `userPassword` | User/password | `password` |
 | `customDriverOptions` | Custom driver options | `password`, `token`, `privateKey`, `privateKeyPassphrase` |
 
+## Experience Metadata
+
+- Domains: `vector`
+- Result views: `vectorNeighbors`, `table`, `json`
+- Inspired by: `Milvus collections`, `Milvus indexes`, `Milvus scalar filtering`
+
+| Workflow | Result view | Templates |
+|---|---|---|
+| Similarity search | vectorNeighbors | vector-similarity |
+| Filtered ANN search | vectorNeighbors | vector-filtered |
+| Collection or index health | table | vector-health |
+
+| Template | Label | Language | Result view |
+|---|---|---|---|
+| `vector-similarity` | Milvus vector search | `python` | `vectorNeighbors` |
+| `vector-filtered` | Milvus filtered search | `python` | `vectorNeighbors` |
+| `vector-health` | Milvus collection stats | `text` | `table` |
+
 ## ABI Calls
 
 The scaffold handles these JSON requests today:
