@@ -319,6 +319,128 @@
             "milvus"
           ],
           "customDriverOptions": true
+        },
+        "experience": {
+          "schemaVersion": 1,
+          "domains": [
+            "vector"
+          ],
+          "inspiredBy": [
+            "Milvus collections",
+            "Milvus indexes",
+            "Milvus scalar filtering"
+          ],
+          "resultViews": [
+            "vectorNeighbors",
+            "table",
+            "json"
+          ],
+          "objectTypes": [
+            "collections",
+            "indexes",
+            "vectors",
+            "payloadFields",
+            "partitions",
+            "namespaces"
+          ],
+          "workflows": [
+            {
+              "id": "vector-similarity-search",
+              "label": "Similarity search",
+              "description": "Search nearest neighbors from a pasted vector or embedding variable.",
+              "resultView": "vectorNeighbors",
+              "templateIds": [
+                "vector-similarity"
+              ]
+            },
+            {
+              "id": "vector-filtered-search",
+              "label": "Filtered ANN search",
+              "description": "Combine vector similarity with metadata or scalar filters.",
+              "resultView": "vectorNeighbors",
+              "templateIds": [
+                "vector-filtered"
+              ]
+            },
+            {
+              "id": "vector-health",
+              "label": "Collection or index health",
+              "description": "Inspect vector count, dimensionality, metric, shard, and index status.",
+              "resultView": "table",
+              "templateIds": [
+                "vector-health"
+              ]
+            }
+          ],
+          "queryTemplates": [
+            {
+              "id": "vector-similarity",
+              "label": "Milvus vector search",
+              "language": "python",
+              "description": "Search a collection with a COSINE ANN parameter block.",
+              "insertText": "collection.search(\n    data=[$vector],\n    anns_field=\"embedding\",\n    param={\"metric_type\": \"COSINE\", \"params\": {\"ef\": 64}},\n    limit=10,\n    output_fields=[\"*\"]\n)",
+              "parameters": [
+                {
+                  "id": "vector",
+                  "label": "Query vector",
+                  "type": "json"
+                }
+              ],
+              "resultView": "vectorNeighbors"
+            },
+            {
+              "id": "vector-filtered",
+              "label": "Milvus filtered search",
+              "language": "python",
+              "description": "Add a scalar filter expression to vector search.",
+              "insertText": "collection.search(\n    data=[$vector],\n    anns_field=\"embedding\",\n    param={\"metric_type\": \"COSINE\", \"params\": {\"ef\": 64}},\n    limit=10,\n    expr='$field == \"$value\"',\n    output_fields=[\"*\"]\n)",
+              "parameters": [
+                {
+                  "id": "vector",
+                  "label": "Query vector",
+                  "type": "json"
+                },
+                {
+                  "id": "field",
+                  "label": "Scalar field",
+                  "type": "string"
+                },
+                {
+                  "id": "value",
+                  "label": "Scalar value",
+                  "type": "string"
+                }
+              ],
+              "resultView": "vectorNeighbors"
+            },
+            {
+              "id": "vector-health",
+              "label": "Milvus collection stats",
+              "language": "text",
+              "description": "Inspect collection schema, indexes, and load state.",
+              "insertText": "describe_collection($collection)",
+              "parameters": [
+                {
+                  "id": "collection",
+                  "label": "Collection",
+                  "type": "string"
+                }
+              ],
+              "resultView": "table"
+            }
+          ],
+          "inspectorHints": [
+            {
+              "id": "vector-dimension",
+              "label": "Dimension badge",
+              "description": "Surface vector dimension and distance metric beside each collection or index."
+            },
+            {
+              "id": "vector-payload",
+              "label": "Payload fields",
+              "description": "Show filterable metadata fields before composing a filtered search."
+            }
+          ]
         }
       }
     ]
