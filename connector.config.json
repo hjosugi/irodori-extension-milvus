@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "visibility": "public",
+  "extensionId": "irodori.milvus",
+  "connector": {
+    "id": "milvus.connector",
+    "engine": "milvus",
+    "label": "Milvus",
+    "aliases": [
+      "milvus",
+      "Milvus"
+    ],
+    "defaultPort": 19530,
+    "wire": "milvus",
+    "module": "milvus.driver",
+    "features": [
+      "metadata"
+    ]
+  },
+  "runtime": {
+    "abi": "irodori.connector.native.v1",
+    "module": {
+      "id": "milvus.driver",
+      "path": "dist/native",
+      "platforms": [
+        "windowsX64",
+        "windowsArm64",
+        "macosX64",
+        "macosArm64",
+        "linuxX64",
+        "linuxArm64"
+      ]
+    },
+    "crate": "irodori_extension_milvus",
+    "entrypoints": [
+      "irodori_extension_abi_version",
+      "irodori_connector_engine_json",
+      "irodori_extension_manifest_json",
+      "irodori_connector_config_json",
+      "irodori_connector_call_json",
+      "irodori_connector_free_buffer"
+    ],
+    "supportedCalls": [
+      "health",
+      "describe",
+      "manifest",
+      "config"
+    ],
+    "driverLinked": false
+  },
+  "source": {
+    "marketplaceId": "irodori.milvus",
+    "repository": "https://github.com/hjosugi/irodori-extension-milvus",
+    "knowledgeEngineStatus": "recognized_no_connector",
+    "adapter": null,
+    "adapterSha256": null
+  }
+}
